@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/retweetedBy"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="by Avengers"
+                android:drawablePadding="8dp"
+                android:textSize="13sp"
+                android:drawableStart="@drawable/ic_retweet_circular"
+                android:background="@drawable/rounded_bg"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="#ab47bc"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/userImageContainer"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/retweetedBy"
+                app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                    android:id="@+id/userImage"
+                    android:background="#bdbdbd"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+                android:id="@+id/userName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-medium"
+                tools:text="Tony Stark"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:layout_marginEnd="32dp"
+                android:includeFontPadding="false"
+                app:layout_constraintEnd_toStartOf="@id/tweetTime"
+                app:layout_constraintStart_toEndOf="@id/userImageContainer"
+                app:layout_constraintBottom_toTopOf="@id/userHandle"
+                app:layout_constraintTop_toTopOf="@id/userImageContainer"/>
+
+        <TextView
+                android:id="@+id/userHandle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="#757575"
+                tools:text="\@Ironman"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/userName"
+                app:layout_constraintBottom_toBottomOf="@id/userImageContainer"
+                app:layout_constraintStart_toEndOf="@id/userImageContainer"/>
+
+        <ImageView
+                android:id="@+id/verifiedIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/userHandle"
+                app:layout_constraintTop_toTopOf="@id/userHandle"
+                app:layout_constraintBottom_toBottomOf="@id/userHandle"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_verified"/>
+
+        <TextView
+                android:id="@+id/tweetTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                tools:text="6 hrs"
+                android:gravity="end"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="@id/userName"
+                app:layout_constraintBottom_toBottomOf="@id/userName"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+                android:id="@+id/tweetText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.15"
+                android:textColor="#212121"
+                tools:text="This is the sample tweet text which may or may not span multiple lines depending upon the tweet's content's length at any given time! #Bitter"
+                app:layout_constraintTop_toBottomOf="@id/userImageContainer"/>
+
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/imageContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#eee"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toBottomOf="@id/tweetText">
+
+            <ImageView
+                    android:id="@+id/tweetImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+                android:id="@+id/gifTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="GIF"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#FFFFFF"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textSize="13sp"
+                android:background="@drawable/image_rounded_bg"
+                app:layout_constraintBottom_toBottomOf="@id/imageContainer"
+                app:layout_constraintEnd_toEndOf="@id/imageContainer"/>
+
+        <ImageView
+                android:id="@+id/quoteTweetLine"
+                android:layout_width="4dp"
+                android:layout_height="0dp"
+                android:background="#eee"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/quoteTweetText"
+                app:layout_constraintTop_toTopOf="@id/quoteTweetHeader"/>
+
+        <LinearLayout
+                android:id="@+id/quoteTweetHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@id/imageContainer">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                <ImageView
+                        android:id="@+id/quoteUserImage"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="#eee"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                    android:id="@+id/quoteUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:layout_marginStart="4dp"
+                    tools:text="Avengers HQ"
+                    android:fontFamily="sans-serif-medium"/>
+
+            <ImageView
+                    android:id="@+id/quoteUserVerified"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_verified"/>
+
+            <TextView
+                    android:id="@+id/quoteUserHandle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="\@avengershq"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"/>
+
+            <TextView
+                    android:id="@+id/quoteTweetTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    tools:text="12h"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/quoteTweetText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:minLines="3"
+                android:textColor="#212121"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:lineSpacingMultiplier="1.1"
+                tools:text="Lorem ipsum was invented to fill such placeholder texttview with some texts just so as to get a rough idea on how it will look"
+                app:layout_constraintEnd_toStartOf="@id/quoteTweetImage"
+                app:layout_constraintStart_toStartOf="@id/quoteTweetHeader"
+                app:layout_constraintTop_toBottomOf="@id/quoteTweetHeader"
+                android:ellipsize="end"/>
+
+        <ImageView
+                android:id="@+id/quoteTweetImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:background="#eeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintBottom_toBottomOf="@id/quoteTweetText"
+                app:layout_constraintTop_toTopOf="@id/quoteTweetText"/>
+
+
+        <LinearLayout
+                android:id="@+id/retweetContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/quoteTweetText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/favouriteContainer"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/retweetIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:tint="@color/icon_tint"
+                    android:src="@drawable/ic_retweet_circular_gray"/>
+
+            <TextView
+                    android:id="@+id/retweetCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/icon_tint"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    tools:text="2.4k"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/favouriteContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/quoteTweetText"
+                app:layout_constraintStart_toEndOf="@id/retweetContainer"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/likeIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/like_icon_state"/>
+
+            <TextView
+                    android:id="@+id/likeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/icon_tint"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    tools:text="5.1k"/>
+
+        </LinearLayout>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/imageContainer"
+                app:layout_constraintBottom_toBottomOf="@id/imageContainer"
+                app:layout_constraintStart_toStartOf="@id/imageContainer"
+                app:layout_constraintEnd_toEndOf="@id/imageContainer"
+                android:padding="0dp"
+                android:backgroundTint="#99000000"
+                android:src="@drawable/ic_play_circle"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

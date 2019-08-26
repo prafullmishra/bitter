@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        tools:background="#eee"
+                        app:layout_constraintDimensionRatio="18:6"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.cardview.widget.CardView
+                        android:id="@+id/profileContainer"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/follow"
+                        app:cardCornerRadius="28dp">
+
+                    <ImageView
+                            android:id="@+id/profile"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="#bdbdbd"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                        android:id="@+id/follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Following"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
+                        app:layout_constraintTop_toBottomOf="@id/banner"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Google UK"
+                        android:textColor="#000000"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="18sp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/follow"/>
+
+                <ImageView
+                        android:id="@+id/verifiedIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_verified"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/userName"
+                        app:layout_constraintBottom_toBottomOf="@id/userName"
+                        app:layout_constraintTop_toTopOf="@id/userName"/>
+
+                <TextView
+                        android:id="@+id/userHandle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:textColor="#bdbdbd"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/userName"
+                        tools:text="\@googleuk"/>
+
+                <TextView
+                        android:id="@+id/profileText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="#424242"
+                        android:textSize="15sp"
+                        android:lineSpacingMultiplier="1.1"
+                        tools:text="ComponentActivity, the base class for Fragment Activity and AppCompatActivity, allows you to control the behavior of the Back button by using its OnBackPressedDispatcher, which you can retrieve by calling getOnBack"
+                        app:layout_constraintTop_toBottomOf="@id/userHandle"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginStart="24dp"/>
+
+                <LinearLayout
+                        android:id="@+id/firstLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toBottomOf="@id/profileText">
+
+                    <ImageView
+                            android:id="@+id/locationIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:tint="#9e9e9e"
+                            android:src="@drawable/ic_location"/>
+
+                    <TextView
+                            android:id="@+id/locationText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textColor="#636363"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:textSize="14sp"
+                            tools:text="New Delhi, India"
+                            android:layout_weight="1"/>
+
+                    <ImageView
+                            android:id="@+id/joinedIcon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:tint="#9e9e9e"
+                            android:src="@drawable/ic_calendar"/>
+
+                    <TextView
+                            android:id="@+id/joinedText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textColor="#636363"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:textSize="14sp"
+                            tools:text="Joined on 26 May,2019"/>
+
+                </LinearLayout>
+
+                <ImageView
+                        android:id="@+id/linkIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:tint="#9e9e9e"
+                        android:src="@drawable/ic_link"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/firstLine"/>
+
+                <TextView
+                        android:id="@+id/linkText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="24dp"
+                        tools:text="http://youtube.com/GoogleUK"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/linkIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/linkIcon"
+                        app:layout_constraintTop_toTopOf="@id/linkIcon"/>
+
+                <TextView
+                        android:id="@+id/friendsCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        tools:text="456"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:layout_marginTop="24dp"
+                        app:layout_constraintTop_toBottomOf="@id/linkText"
+                        app:layout_constraintEnd_toStartOf="@id/followersCount"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                        android:id="@+id/followersCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        tools:text="3.2M"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="#000000"
+                        android:layout_marginTop="24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linkText"
+                        android:layout_marginEnd="24dp"
+                        app:layout_constraintStart_toEndOf="@id/friendsCount"/>
+
+
+                <TextView
+                        android:id="@+id/friends"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:gravity="center"
+                        android:text="Following"
+                        android:textColor="#9e9e9e"
+                        android:textSize="13sp"
+                        android:layout_marginTop="2dp"
+                        app:layout_constraintTop_toBottomOf="@id/friendsCount"
+                        app:layout_constraintEnd_toStartOf="@id/followers"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                        android:id="@+id/followers"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:text="Followers"
+                        android:textColor="#9e9e9e"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/followersCount"
+                        android:layout_marginEnd="24dp"
+                        app:layout_constraintStart_toEndOf="@id/friends"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:nestedScrollingEnabled="false"/>
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_marginTop="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#eee"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

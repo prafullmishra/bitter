@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/welcomeFragment">
+
+    <fragment android:id="@+id/welcomeFragment" android:name="in.wordmug.bitter.Fragments.WelcomeFragment"
+              android:label="welcome_fragment" tools:layout="@layout/welcome_fragment">
+        <action android:id="@+id/action_welcomeFragment_to_homeFragment" app:destination="@id/homeFragment"
+                app:popUpTo="@+id/welcomeFragment" app:popUpToInclusive="true"/>
+        <action
+                android:id="@+id/action_welcomeFragment_to_finalFragment"
+                app:destination="@id/finalFragment"
+                app:popUpTo="@+id/welcomeFragment"
+                app:popUpToInclusive="true" />
+    </fragment>
+    <fragment android:id="@+id/homeFragment" android:name="in.wordmug.bitter.Fragments.HomeFragment"
+              android:label="home_fragment" tools:layout="@layout/home_fragment">
+        <action android:id="@+id/action_homeFragment_to_profileFragment" app:destination="@id/profileFragment"/>
+        <action android:id="@+id/action_homeFragment_to_trendsFragment" app:destination="@id/trendsFragment"/>
+        <action android:id="@+id/action_homeFragment_to_viewTweet" app:destination="@id/viewTweet"/>
+        <action android:id="@+id/action_homeFragment_to_viewImageFragment" app:destination="@id/viewImageFragment"/>
+        <action android:id="@+id/action_homeFragment_to_viewVideoFragment" app:destination="@id/viewVideoFragment"/>
+        <action
+                android:id="@+id/action_homeFragment_to_profileFragment2"
+                app:destination="@id/profileFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_searchFragment"
+                app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment android:id="@+id/profileFragment" android:name="in.wordmug.bitter.Fragments.ProfileFragment"
+              android:label="ProfileFragment">
+        <argument android:name="user" app:argType="in.wordmug.bitter.DataClass.User"/>
+        <action android:id="@+id/action_profileFragment_to_viewTweet" app:destination="@id/viewTweet"/>
+        <action android:id="@+id/action_profileFragment_self" app:destination="@id/profileFragment"/>
+        <action android:id="@+id/action_profileFragment_to_viewImageFragment" app:destination="@id/viewImageFragment"/>
+        <action android:id="@+id/action_profileFragment_to_viewVideoFragment" app:destination="@id/viewVideoFragment"/>
+    </fragment>
+    <fragment android:id="@+id/trendsFragment" android:name="in.wordmug.bitter.Fragments.TrendsFragment"
+              android:label="TrendsFragment">
+        <action android:id="@+id/action_trendsFragment_to_searchFragment" app:destination="@id/searchFragment"/>
+    </fragment>
+    <fragment android:id="@+id/viewTweet" android:name="in.wordmug.bitter.Fragments.ViewTweetFragment"
+              android:label="ViewTweet">
+        <argument android:name="tweetId" app:argType="string"/>
+        <action android:id="@+id/action_viewTweet_to_profileFragment" app:destination="@id/profileFragment"/>
+        <action android:id="@+id/action_viewTweet_self" app:destination="@id/viewTweet"/>
+        <action android:id="@+id/action_viewTweet_to_viewImageFragment" app:destination="@id/viewImageFragment"/>
+        <action android:id="@+id/action_viewTweet_to_viewVideoFragment" app:destination="@id/viewVideoFragment"/>
+    </fragment>
+    <fragment android:id="@+id/searchFragment" android:name="in.wordmug.bitter.Fragments.SearchFragment"
+              android:label="SearchFragment">
+        <argument android:name="query" app:argType="string"/>
+        <action android:id="@+id/action_searchFragment_to_viewImageFragment" app:destination="@id/viewImageFragment"/>
+        <action android:id="@+id/action_searchFragment_to_viewTweet" app:destination="@id/viewTweet"/>
+        <action android:id="@+id/action_searchFragment_to_viewVideoFragment" app:destination="@id/viewVideoFragment"/>
+        <action android:id="@+id/action_searchFragment_to_profileFragment" app:destination="@id/profileFragment"/>
+    </fragment>
+    <fragment android:id="@+id/viewImageFragment" android:name="in.wordmug.bitter.Fragments.ViewImageFragment"
+              android:label="ViewImageFragment">
+        <argument android:name="imageUrl" app:argType="string"/>
+    </fragment>
+    <fragment android:id="@+id/viewVideoFragment" android:name="in.wordmug.bitter.Fragments.ViewVideoFragment"
+              android:label="ViewVideoFragment">
+        <argument android:name="videoUrl" app:argType="string"/>
+    </fragment>
+    <fragment
+            android:id="@+id/finalFragment"
+            android:name="in.wordmug.bitter.Fragments.FinalFragment"
+            android:label="final_fragment"
+            tools:layout="@layout/final_fragment" >
+        <action
+                android:id="@+id/action_finalFragment_to_homeFragment"
+                app:destination="@id/homeFragment"
+                app:popUpTo="@+id/finalFragment"
+                app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

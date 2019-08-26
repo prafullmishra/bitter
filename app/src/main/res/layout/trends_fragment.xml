@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Fragments.TrendsFragment">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trendList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="6"
+                android:paddingTop="16dp"
+                android:paddingBottom="32dp"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_trend_list"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
