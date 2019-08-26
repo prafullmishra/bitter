@@ -13,6 +13,7 @@ import `in`.wordmug.bitter.databinding.ItemTweetGifBinding
 import `in`.wordmug.bitter.databinding.ItemTweetVideoBinding
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -36,6 +37,7 @@ class HomeFragment : Fragment(), CallbackInterface {
         fun newInstance() = HomeFragment()
     }
 
+    private lateinit var sp: SharedPreferences
     private lateinit var viewModel: HomeViewModel
     private lateinit var mainModel: MainViewModel
     private lateinit var binding: HomeFragmentBinding
@@ -59,6 +61,7 @@ class HomeFragment : Fragment(), CallbackInterface {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         activity?.let { mainModel = ViewModelProviders.of(it).get(MainViewModel::class.java) }
+        sp = getSP(context!!)
 
         var sample = "01234567"
         sample = sample.replaceRange(1,3,"--")
@@ -140,7 +143,7 @@ class HomeFragment : Fragment(), CallbackInterface {
             }
             else if(option == R.id.profileFragment)
             {
-                //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+                viewModel.fetchProfile(sp.getString(SP_SCREEN_NAME,"")?:"twitter")
             }
         })
 

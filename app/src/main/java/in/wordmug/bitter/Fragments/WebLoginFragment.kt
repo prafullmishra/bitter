@@ -1,8 +1,6 @@
 package `in`.wordmug.bitter.Fragments
 
-import `in`.wordmug.bitter.DataUtils.STATUS_DONE
-import `in`.wordmug.bitter.DataUtils.STATUS_FAILED
-import `in`.wordmug.bitter.DataUtils.STATUS_WAITING
+import `in`.wordmug.bitter.DataUtils.*
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -38,7 +36,6 @@ class WebLoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.i("in weblogin frag")
         binding = DataBindingUtil.inflate(inflater, R.layout.web_login_fragment, container, false)
         return binding.root
     }
@@ -48,53 +45,14 @@ class WebLoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(WebLoginViewModel::class.java)
 
-        pDialog = ProgressDialog(context!!)
+        pDialog  = ProgressDialog(context!!)
         pDialog.setCancelable(false)
 
-        Timber.i("preparing webview now")
-        binding.webView.webViewClient = object : WebViewClient(){
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                Timber.i("now loading $url")
-                super.onPageStarted(view, url, favicon)
-
-                if(url!=null && url.startsWith("bitter://"))
-                {
-                    binding.webView.visibility = View.GONE
-                    viewModel.convertToken(url)
-                }
-
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                Timber.i("finished loading $url")
-                super.onPageFinished(view, url)
-
-            }
-
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                super.onReceivedError(view, request, error)
-            }
-        }
-
-        Timber.i("loading url now")
-        binding.webView.settings.javaScriptEnabled = true
-
-
-        viewModel._initTokenFetched.observe(viewLifecycleOwner, Observer { status->
-            if(status == STATUS_DONE)
-            {
-                //next step
-                binding.webView.loadUrl("https://api.twitter.com/oauth/authenticate?oauth_token=${viewModel.oauthToken}")
-            }
-            else if(status == STATUS_FAILED)
-            {
-                findNavController().navigateUp()
-            }
+        viewModel.initTokenFetched.observe(viewLifecycleOwner, Observer {status->
 
             if(status == STATUS_WAITING)
             {
-                pDialog.setMessage("Fetching token...")
+                pDialog.setMessage("Generating token..")
                 pDialog.show()
             }
             else
@@ -102,12 +60,62 @@ class WebLoginFragment : Fragment() {
                 pDialog.dismiss()
             }
 
+            if(status == STATUS_DONE)
+            {
+                binding.webView.webViewClient = object : WebViewClient(){
+
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                        Timber.i("now loading $url")
+                        super.onPageStarted(view, url, favicon)
+
+                        if(url!=null && url.startsWith("bitter://"))
+                        {
+                            binding.webView.visibility = View.GONE
+                            viewModel.convertToken(url)
+                        }
+
+                        pDialog.setMessage("Loading login page...")
+                        pDialog.show()
+
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        Timber.i("finished loading $url")
+                        super.onPageFinished(view, url)
+                        if(pDialog.isShowing) pDialog.dismiss()
+
+                    }
+
+                    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                        super.onReceivedError(view, request, error)
+                        if(pDialog.isShowing) pDialog.dismiss()
+                    }
+                }
+                binding.webView.settings.javaScriptEnabled = true
+                binding.webView.loadUrl("https://api.twitter.com/oauth/authenticate?oauth_token=${viewModel.oauthToken}")
+            }
         })
 
-        viewModel._finalTokenFetched.observe(viewLifecycleOwner, Observer { status->
-            if(status)
+        viewModel.finalTokenFetched.observe(viewLifecycleOwner, Observer { status->
+
+            if(status == STATUS_WAITING)
             {
-                //findNavController().navigate(WebLoginFragmentDirections.actionWebLoginFragmentToHomeFragment())
+                pDialog.setMessage("Converting to access token..")
+                pDialog.show()
+            }
+            else
+            {
+                pDialog.dismiss()
+            }
+
+            if(status == STATUS_SUCCESS)
+            {
+                findNavController().navigate(WebLoginFragmentDirections.actionFinalFragmentToHomeFragment())
+                viewModel.finalTokenFetched.value = STATUS_INIT
+            }
+            else if(status == STATUS_NETWORK_ERROR)
+            {
+                showToast(context!!, "Error connecting")
             }
         })
     }
