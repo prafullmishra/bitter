@@ -157,6 +157,15 @@ class TwitterWrapper private constructor(private var token: String, private var 
     }
 
 
+    suspend fun createTweet(status: String): String
+    {
+        val tempurl = "https://api.twitter.com/1.1/statuses/update.json"
+        val params = HashMap<String,String>()
+        params.put("status", status)
+        return TwitterApi.retrofitService.createTweet(getSignedHeaders("POST", tempurl, params), status).await().string()
+    }
+
+
     private fun getSignedHeaders(method: String, url: String, params: HashMap<String,String> = HashMap(), authVerifier: String = "") : String
     {
         //Timber.i("token is $token")

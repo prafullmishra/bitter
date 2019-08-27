@@ -27,6 +27,9 @@
         <action
                 android:id="@+id/action_homeFragment_to_searchFragment"
                 app:destination="@id/searchFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_createTweetFragment"
+                app:destination="@id/createTweetFragment" />
     </fragment>
     <fragment android:id="@+id/profileFragment" android:name="in.wordmug.bitter.Fragments.ProfileFragment"
               android:label="ProfileFragment">
@@ -75,4 +78,9 @@
                 app:popUpTo="@+id/finalFragment"
                 app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+            android:id="@+id/createTweetFragment"
+            android:name="in.wordmug.bitter.Fragments.CreateTweetFragment"
+            android:label="create_tweet_fragment"
+            tools:layout="@layout/create_tweet_fragment" />
 </navigation>

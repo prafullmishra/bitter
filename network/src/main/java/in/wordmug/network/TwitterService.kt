@@ -57,8 +57,9 @@ interface TwitterService {
     @GET("1.1/users/show.json")
     fun getUser(@Header("Authorization") header: String, @Query("screen_name") screenName: String): Deferred<ResponseBody>
 
+    @FormUrlEncoded
     @POST("1.1/statuses/update.json")
-    fun createTweet(@Header("Authorization") header: String, @Path(value="status", encoded = true) status: String): Deferred<ResponseBody>
+    fun createTweet(@Header("Authorization") header: String, @Field("status") status: String): Deferred<ResponseBody>
 }
 
 

@@ -1,7 +1,9 @@
 package `in`.wordmug.bitter.Fragments
 
 import `in`.wordmug.bitter.DataClass.*
+import `in`.wordmug.bitter.DataUtils.SP_SCREEN_NAME
 import `in`.wordmug.bitter.DataUtils.STATUS_SUCCESS
+import `in`.wordmug.bitter.DataUtils.getSP
 import `in`.wordmug.bitter.DataUtils.getShortenedCount
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -96,6 +98,20 @@ class ProfileFragment : Fragment(), CallbackInterface {
 
 
         binding.apply {
+
+            if(user.handle == getSP(context!!).getString(SP_SCREEN_NAME,"")?:"")
+            {
+                binding.follow.visibility = View.GONE
+            }
+            else
+            {
+                when {
+                    user.followingRequested -> binding.follow.text = "Follow requested"
+                    user.following -> binding.follow.text = "Following"
+                    else -> binding.follow.text = "Not Following"
+                }
+            }
+
             banner.setBackgroundColor(Color.parseColor("#${user.backgroundColor}"))
             Glide.with(context!!).load(user.backgroundImage).into(banner)
             Glide.with(context!!).load(user.profileImage!!.replace("_normal","_x96")).into(profile)

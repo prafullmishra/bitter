@@ -11,6 +11,7 @@ import `in`.wordmug.bitter.databinding.ItemTweetVideoBinding
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.telecom.Call
@@ -110,7 +111,6 @@ class HomeFragment : Fragment(), CallbackInterface {
         viewModel._currentLink.observe(viewLifecycleOwner, Observer { link->
             if(link.isNotEmpty())
             {
-                Toast.makeText(context!!,"Dealing with |$link|", Toast.LENGTH_SHORT).show()
                 if(link.startsWith("#"))
                 {
                     //its a hashtag
@@ -130,6 +130,17 @@ class HomeFragment : Fragment(), CallbackInterface {
                     val urlMatcher = Patterns.WEB_URL.matcher(link)
                     if(urlMatcher.find())
                     {
+                        //it is a valid url
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.data = Uri.parse(link)
+                        if(i.resolveActivity(activity!!.packageManager)!=null)
+                        {
+                            startActivity(i)
+                        }
+                        else
+                        {
+                            showToast(context!!, "No appropriate app found")
+                        }
                     }
                 }
                 viewModel._linkDoneWith()
@@ -178,13 +189,13 @@ class HomeFragment : Fragment(), CallbackInterface {
         })
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTrendsFragment())
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateTweetFragment())
         }
 
     }
 
     /**
-     * callback methods to be used by TweetAdapter for user specific actions on list item
+     * callback methods to be used by TweetAdapter for user specific actions on toolbar icons
      */
 
     override fun openProfile(pos: Int) {
