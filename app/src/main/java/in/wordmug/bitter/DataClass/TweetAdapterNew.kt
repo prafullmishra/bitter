@@ -16,10 +16,15 @@ import com.bumptech.glide.Glide
 import timber.log.Timber
 
 
-
-class TweetAdapter(private val callbackInterface: CallbackInterface, private val actionInterface: TweetActionInterface, private val loadMore: MutableLiveData<Boolean>? = null)
-    : ListAdapter<Tweet, RecyclerView.ViewHolder>(TweetDiffCallback())
+class TweetAdapterNew(private val callbackInterface: CallbackInterface,
+                      private val actionInterface: TweetActionInterface,
+                      private val loadMore: MutableLiveData<Boolean>? = null,
+                      private val tweetList: ArrayList<Tweet>): RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
+    override fun getItemCount(): Int {
+        return tweetList.size
+    }
+
     val TYPE_NORMAL = 1
     val TYPE_GIF = 2
     val TYPE_VIDEO = 3
@@ -33,7 +38,7 @@ class TweetAdapter(private val callbackInterface: CallbackInterface, private val
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = getItem(position)
+        val item = tweetList[position]
 
         return when {
             item.gifThumb.isNotEmpty() -> TYPE_GIF
@@ -43,7 +48,7 @@ class TweetAdapter(private val callbackInterface: CallbackInterface, private val
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = tweetList[position]
         if(holder is TweetGifHolder) holder.bind(item)
         else if(holder is TweetHolder) holder.bind(item)
 
@@ -334,18 +339,34 @@ class TweetAdapter(private val callbackInterface: CallbackInterface, private val
         }
     }
 
-
-    class TweetDiffCallback: DiffUtil.ItemCallback<Tweet>()
+    fun updateList(newList: ArrayList<Tweet>)
     {
-        override fun areItemsTheSame(oldItem: Tweet, newItem: Tweet): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Tweet, newItem: Tweet): Boolean {
-            return oldItem == newItem
-        }
-
+        Timber.i("prev - new : ${tweetList.size} - ${newList.size}")
+        val result = DiffUtil.calculateDiff(TweetDiffCallback(tweetList, newList))
+        tweetList.clear()
+        tweetList.addAll(newList)
+        result.dispatchUpdatesTo(this)
     }
 
 
+    class TweetDiffCallback(private val oldList: ArrayList<Tweet>, private val newList: ArrayList<Tweet>): DiffUtil.Callback()
+    {
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+    }
+
+    
 }

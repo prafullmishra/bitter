@@ -1,9 +1,6 @@
 package `in`.wordmug.bitter.Fragments
 
-import `in`.wordmug.bitter.DataClass.CallbackInterface
-import `in`.wordmug.bitter.DataClass.TweetActionInterface
-import `in`.wordmug.bitter.DataClass.TweetAdapter
-import `in`.wordmug.bitter.DataClass.User
+import `in`.wordmug.bitter.DataClass.*
 import `in`.wordmug.bitter.DataUtils.*
 import `in`.wordmug.bitter.MainViewModel
 import `in`.wordmug.bitter.R
@@ -16,6 +13,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.telecom.Call
 import android.text.method.LinkMovementMethod
 import android.util.Patterns
 import android.view.*
@@ -41,7 +39,7 @@ class HomeFragment : Fragment(), CallbackInterface {
     private lateinit var viewModel: HomeViewModel
     private lateinit var mainModel: MainViewModel
     private lateinit var binding: HomeFragmentBinding
-    private var adapter: TweetAdapter? = null
+    private var adapter: TweetAdapterNew? = null
     private lateinit var dialog: ProgressDialog
 
     private var cachedView: View? = null
@@ -76,10 +74,11 @@ class HomeFragment : Fragment(), CallbackInterface {
             {
                 if(adapter == null)
                 {
-                    adapter = TweetAdapter(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore)
+                    //adapter = TweetAdapter(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore)
+                    adapter = TweetAdapterNew(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore, viewModel.tweetList)
                     binding.tweetList.adapter = adapter
                 }
-                adapter?.let { it.submitList(viewModel.tweetList) }
+                /*adapter?.let { it.submitList(viewModel.tweetList) }*/
             }
         })
 
@@ -99,7 +98,7 @@ class HomeFragment : Fragment(), CallbackInterface {
             else if(status == STATUS_SUCCESS)
             {
                 showToast(context!!, "Loading successful!")
-                adapter?.submitList(viewModel.tweetList)
+                adapter?.notifyDataSetChanged()
                 viewModel._moreStatusDoneWith()
             }
             else if(status == STATUS_NETWORK_ERROR)
