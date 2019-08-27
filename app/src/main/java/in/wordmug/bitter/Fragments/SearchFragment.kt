@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import `in`.wordmug.bitter.databinding.SearchFragmentBinding
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import timber.log.Timber
 
 class SearchFragment : Fragment(), CallbackInterface {
@@ -26,6 +27,7 @@ class SearchFragment : Fragment(), CallbackInterface {
     private lateinit var viewModel: SearchViewModel
     private lateinit var viewModelFactory: SearchViewModelFactory
     private lateinit var adapter: TweetAdapter
+    private var prevSize = -1
 
     private var cachedView: View? = null
 
@@ -75,8 +77,15 @@ class SearchFragment : Fragment(), CallbackInterface {
             {
                 STATUS_SUCCESS -> {
                     Timber.i("submitting list")
-                    adapter.submitList(viewModel.tweetList) //uses diffutil to update item
-                    binding.list.scrollToPosition(0)
+
+                    if(prevSize!= viewModel.tweetList.size)
+                    {
+                        prevSize = viewModel.tweetList.size
+                        adapter.submitList(viewModel.tweetList) //uses diffutil to update item
+                        binding.list.scrollToPosition(prevSize-1)
+                    }
+
+                    //binding.list.scrollToPosition(0)
                     //adapter.notifyDataSetChanged()
                 }
             }

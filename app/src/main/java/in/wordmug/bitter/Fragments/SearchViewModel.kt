@@ -33,7 +33,7 @@ import kotlin.collections.ArrayList
 class SearchViewModel(application: Application, query: String) : BaseViewModel(application), TweetActionInterface {
 
 
-    private val TIME_INTERVAL = 10000L
+    private val TIME_INTERVAL = 5000L
 
     private var sp: SharedPreferences = getSP(application.applicationContext)
     private var wrapper = TwitterWrapper.getInstance(sp.getString(SP_OAUTH_TOKEN,"")?:"", sp.getString(SP_OAUTH_SECRET,"")?:"")
@@ -185,13 +185,13 @@ class SearchViewModel(application: Application, query: String) : BaseViewModel(a
 
             try {
                 val response = wrapper.searchForTweets(query, sinceId)
-                //Timber.i("response with sinceId = $sinceId is $response")
+                //Timber.i("response with maxId = $maxId is $response")
                 val array = JSONObject(response).getJSONArray("statuses")
 
                 val today       = Date()
                 val parser      = SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", locale)
 
-                Timber.i("sinceId is now $sinceId")
+                Timber.i("maxId is now $sinceId")
                 Timber.i("length before addition ${tweetList.size}")
 
                 val tempList = ArrayList<Tweet>()
@@ -220,7 +220,7 @@ class SearchViewModel(application: Application, query: String) : BaseViewModel(a
                 if(!hasHandlerStarted)
                 {
                     hasHandlerStarted = true
-                    //handler.postDelayed(runnable, TIME_INTERVAL)
+                    handler.postDelayed(runnable, TIME_INTERVAL)
                 }
 
             }

@@ -24,6 +24,9 @@ interface TwitterService {
     @GET("1.1/statuses/home_timeline.json")
     fun getTimeline(@Header("Authorization") header: String, @Query("count") count: String, @Query("tweet_mode") mode: String) : Deferred<ResponseBody>
 
+    @GET("1.1/statuses/home_timeline.json")
+    fun getTimelineMore(@Header("Authorization") header: String, @Query("count") count: String, @Query("max_id") maxId: String, @Query("tweet_mode") mode: String) : Deferred<ResponseBody>
+
     @POST("1.1/favorites/create.json")
     fun createFavorite(@Header("Authorization") header: String, @Query("id") statusId: String): Deferred<ResponseBody>
 
@@ -54,6 +57,8 @@ interface TwitterService {
     @GET("1.1/users/show.json")
     fun getUser(@Header("Authorization") header: String, @Query("screen_name") screenName: String): Deferred<ResponseBody>
 
+    @POST("1.1/statuses/update.json")
+    fun createTweet(@Header("Authorization") header: String, @Path(value="status", encoded = true) status: String): Deferred<ResponseBody>
 }
 
 

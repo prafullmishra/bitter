@@ -41,7 +41,7 @@ class HomeFragment : Fragment(), CallbackInterface {
     private lateinit var viewModel: HomeViewModel
     private lateinit var mainModel: MainViewModel
     private lateinit var binding: HomeFragmentBinding
-    private lateinit var adapter: TweetAdapter
+    private var adapter: TweetAdapter? = null
     private lateinit var dialog: ProgressDialog
 
     private var cachedView: View? = null
@@ -74,9 +74,37 @@ class HomeFragment : Fragment(), CallbackInterface {
         viewModel._status.observe(viewLifecycleOwner, Observer {status->
             if(status == STATUS_SUCCESS)
             {
-                adapter = TweetAdapter(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore)
-                binding.tweetList.adapter = adapter
-                adapter.submitList(viewModel.tweetList)
+                if(adapter == null)
+                {
+                    adapter = TweetAdapter(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore)
+                    binding.tweetList.adapter = adapter
+                }
+                adapter?.let { it.submitList(viewModel.tweetList) }
+            }
+        })
+
+        viewModel.loadMore.observe(viewLifecycleOwner, Observer { status->
+            if(status)
+            {
+                viewModel.fetchDataMore()
+                viewModel.loadMore.value = false
+            }
+        })
+
+        viewModel._moreStatus.observe(viewLifecycleOwner, Observer { status->
+            if(status == STATUS_WAITING)
+            {
+                showToast(context!!, "Loading more tweets...")
+            }
+            else if(status == STATUS_SUCCESS)
+            {
+                showToast(context!!, "Loading successful!")
+                adapter?.submitList(viewModel.tweetList)
+                viewModel._moreStatusDoneWith()
+            }
+            else if(status == STATUS_NETWORK_ERROR)
+            {
+                showToast(context!!, "Failed to load more tweets")
             }
         })
 
@@ -120,6 +148,7 @@ class HomeFragment : Fragment(), CallbackInterface {
                 if(status == STATUS_SUCCESS && viewModel.currentProfile!=null)
                 {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment(viewModel.currentProfile as User))
+                    viewModel._profileDoneWith()
                 }
             }
         })
@@ -127,7 +156,7 @@ class HomeFragment : Fragment(), CallbackInterface {
         viewModel._shouldRefresh.observe(viewLifecycleOwner, Observer { shouldRefresh->
             if(shouldRefresh)
             {
-                adapter.notifyDataSetChanged()
+                adapter?.let { it.notifyDataSetChanged() }
                 viewModel.refreshDone()
             }
         })
@@ -140,10 +169,12 @@ class HomeFragment : Fragment(), CallbackInterface {
             if(option == R.id.trendsFragment)
             {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTrendsFragment())
+                mainModel.optionSelected.value = -1
             }
             else if(option == R.id.profileFragment)
             {
                 viewModel.fetchProfile(sp.getString(SP_SCREEN_NAME,"")?:"twitter")
+                mainModel.optionSelected.value = -1
             }
         })
 
