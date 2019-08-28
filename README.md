@@ -12,3 +12,5 @@ It illustrates the following actions that can be done with the help of Twitter A
 8) Posting a tweet
 9) View latest trends/hashtags
 10) Filtering live tweets for a hashtag or search query
+11) Viewing of full size images attached to a tweet
+12) Viewing of gif videos/ mp4 videos attached to a tweet
