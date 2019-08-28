@@ -75,11 +75,10 @@ class HomeFragment : Fragment(), CallbackInterface {
             {
                 if(adapter == null)
                 {
-                    //adapter = TweetAdapter(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore)
                     adapter = TweetAdapterNew(this as CallbackInterface, viewModel as TweetActionInterface, viewModel.loadMore, viewModel.tweetList)
                     binding.tweetList.adapter = adapter
+                    binding.loader.visibility = View.GONE
                 }
-                /*adapter?.let { it.submitList(viewModel.tweetList) }*/
             }
         })
 

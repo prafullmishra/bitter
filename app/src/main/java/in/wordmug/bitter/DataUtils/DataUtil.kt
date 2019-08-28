@@ -164,7 +164,7 @@ fun getParsedTweet(json: JSONObject, today: Date, parser: SimpleDateFormat, targ
         user.getLong("followers_count"), user.getLong("friends_count"), 123L,
         user.getString("created_at"), user.getLong("statuses_count"), user.getString("profile_background_color"),
         profileBanner, user.getBoolean("default_profile_image"),
-        user.getString("profile_image_url_https")?:"".replace("_normal","_x96"), user.getBoolean("following"), user.getBoolean("follow_request_sent"),
+        (user.getString("profile_image_url_https")?:"").replace("_normal","_x96"), user.getBoolean("following"), user.getBoolean("follow_request_sent"),
         user.getBoolean("notifications"))
 
 
@@ -355,7 +355,7 @@ fun parseUser(resp: String):User
         user.getLong("followers_count"), user.getLong("friends_count"), 123L,
         user.getString("created_at"), user.getLong("statuses_count"), user.getString("profile_background_color"),
         profileBanner, user.getBoolean("default_profile_image"),
-        user.getString("profile_image_url_https")?:"".replace("_normal","_x96"), user.getBoolean("following"), user.getBoolean("follow_request_sent"),
+        (user.getString("profile_image_url_https")?:"").replace("_normal","_x96"), user.getBoolean("following"), user.getBoolean("follow_request_sent"),
         user.getBoolean("notifications"))
 }
 
