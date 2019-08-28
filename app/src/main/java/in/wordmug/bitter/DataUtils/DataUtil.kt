@@ -55,7 +55,7 @@ fun getEditor(context: Context): SharedPreferences.Editor
 fun getShortenedCount(number: Long): String
 {
     if(number <1000){ return number.toString() }
-    else if(number < 1000000) { return "${String.format("%.1f", (number.toDouble() /1000F))}k" }
+    else if(number < 1000000) { return "${String.format("%.0f", (number.toDouble() /1000F))}k" }
     else if(number < 1000000000) { return "${String.format("%.1f", (number.toDouble() /1000000F))}M" }
     else { return "${String.format("%.1f", (number.toDouble() /1000000000F))}B" }
 }
@@ -359,7 +359,7 @@ fun parseUser(resp: String):User
         user.getBoolean("notifications"))
 }
 
-private fun extractMP4(obj: JSONObject): String
+internal fun extractMP4(obj: JSONObject): String
 {
     val array = obj.getJSONArray("variants")
     for(i in 0 until array.length())

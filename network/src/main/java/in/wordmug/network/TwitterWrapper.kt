@@ -166,7 +166,7 @@ class TwitterWrapper private constructor(private var token: String, private var 
     }
 
 
-    private fun getSignedHeaders(method: String, url: String, params: HashMap<String,String> = HashMap(), authVerifier: String = "") : String
+    internal fun getSignedHeaders(method: String, url: String, params: HashMap<String,String> = HashMap(), authVerifier: String = "") : String
     {
         //Timber.i("token is $token")
         //Timber.i("verifier is $verifier")
@@ -331,7 +331,7 @@ class TwitterWrapper private constructor(private var token: String, private var 
         return (System.currentTimeMillis() / 1000).toString()
     }
 
-    private fun percentEncode(s: String?): String
+    internal fun percentEncode(s: String?): String
     {
 
         //this function is from TwitterCore library
@@ -363,9 +363,8 @@ class TwitterWrapper private constructor(private var token: String, private var 
         return sb.toString()
     }
 
-    private fun applyHMAC(base: String, key:String) : String
+    internal fun applyHMAC(base: String, key:String) : String
     {
-        Log.i("received params: ", "||$base<||>$key||")
         val baseBytes   = base.toByteArray(Charset.forName("utf-8"))
         val keyBytes    = key.toByteArray(Charset.forName("utf-8"))
         val secretkey   = SecretKeySpec(keyBytes, "HmacSHA1")
