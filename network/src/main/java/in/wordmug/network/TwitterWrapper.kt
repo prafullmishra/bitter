@@ -136,16 +136,16 @@ class TwitterWrapper private constructor(private var token: String, private var 
         return TwitterApi.retrofitService.getRepliesToStatus(getSignedHeaders("GET", tempurl, params), params["q"]?:"", sinceId, "extended","50").await().string()
     }
 
-    suspend fun searchForTweets(query: String, maxId: String = ""): String
+    suspend fun searchForTweets(query: String, sinceId: String = ""): String
     {
         val tempurl = "https://api.twitter.com/1.1/search/tweets.json"
         val params  = HashMap<String,String>()
         params["count"] = "2"
         params["q"] = query
         params["result_type"] = "recent"
-        params["max_id"] = maxId
+        params["since_id"] = sinceId
         params["tweet_mode"] = "extended"
-        return TwitterApi.retrofitService.searchForTweets(getSignedHeaders("GET", tempurl, params), query, "extended", maxId, "2", "recent").await().string()
+        return TwitterApi.retrofitService.searchForTweets(getSignedHeaders("GET", tempurl, params), query, "extended", sinceId, "2", "recent").await().string()
     }
 
     suspend fun getUser(screenName: String): String
